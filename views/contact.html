@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Money Bouquets</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Contact Money Bouquets</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="bouquets.html">Bouquets</a>
+      <a href="order.html">Order</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>We'd love to hear from you!</h2>
+    <p>Email us at <a href="mailto:support@moneybouquets.com">support@moneybouquets.com</a></p>
+    <p>Call us at: (800) 220-6016</p>
+    <p>Or fill out the form below:</p>
+
+    <form action="#" method="POST" onsubmit="alert('Thank you for contacting us!'); return false;">
+      <label for="yourName">Your Name:</label>
+      <input type="text" id="yourName" name="yourName" required>
+
+      <label for="yourEmail">Your Email:</label>
+      <input type="email" id="yourEmail" name="yourEmail" required>
+
+      <label for="yourMessage">Your Message:</label>
+      <textarea id="yourMessage" name="yourMessage" maxlength="500" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Money Bouquets</p>
+    <p>
+      <a href="https://www.ftd.com" target="_blank">FTD Flowers</a> |
+      <a href="https://www.teleflora.com" target="_blank">Teleflora</a>
+    </p>
+  </footer>
+</body>
+</html>

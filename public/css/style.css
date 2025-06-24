@@ -1,0 +1,129 @@
+body { 
+
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #006400;
+  color: white;
+  text-align: center;
+  padding: 1em;
+}
+
+ header img {
+  width: 100%;
+max-height: 300px;
+  object-fit: cover;
+  margin-top: 10px;
+}
+main {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: 100px; /* Space at bottom for footer */
+ max-width: 1200px;
+  margin: 0 auto;
+}
+
+main img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+  max-width: 100%;
+}
+
+nav a {
+  color: #ccffcc;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  border: 4px solid darkgreen;
+}
+
+th, td {
+  border: 2px solid darkgreen;
+  padding: 8px;
+}
+
+footer {
+  background-color: #006400;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  min-height: 50px;
+}
+
+footer a:link {
+  color: darkgreen;
+}
+
+footer a:visited {
+  color: purple;
+}
+
+/* General form styling */
+form {
+  background-color: #f0fff0;
+  border: 2px solid green;
+  border-radius: 8px;
+  padding: 16px;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background-color: #006400;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #228B22;
+}
+
+/* Headings */
+main h2 {
+  text-align: center;
+  color: #006400;
+}

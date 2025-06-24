@@ -1,0 +1,189 @@
+<head>
+  <meta charset="utf-8">
+  <title>Bouquets</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+   <style>
+  button {
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+</style>
+  <script>
+    function sayWelcome() {
+      console.log("Welcome to Money Bouquets!");
+    }
+  </script>
+</head>
+
+  <header>
+    <h1>Money Bouquets</h1>
+<nav style="background-color: hsl(263, 64%, 45%); padding: 5px;">
+      <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+            <a href="bouquets.html">Bouquets</a>
+                <a href="order.html">Order</a>
+                    <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+    <button onclick="sayWelcome()"> 💰Get your 10%off discount code!</button>
+<script>
+  function sayWelcome() {
+    alert("Be sure to include code: WELCOME10 in the special requests on the order page for 10% off!");
+  }
+</script>
+
+  <table border="1">
+      <tr>
+        <th>Name</th>
+            <th>Price</th>
+                <th>Size</th>
+          </tr>
+             <tr>
+        <td rowspan="2">Graduation Special</td>
+            <td>$85</td>
+                <td>Medium</td>
+      </tr>
+        <tr>
+            <td>$150</td>
+                <td>Large</td>
+                  </tr>
+    
+        <tr>
+         <td rowspan="2">Holiday Bouquets</td>
+            <td>$75</td>
+                 <td>Medium</td>
+            </tr>
+      <tr>
+        <td>$120</td>
+            <td>Large</td>
+      </tr>
+    <tr>
+     <td rowspan="2">Other Occasions</td> 
+    <td>$50</td> 
+  <td>Small</td>
+</tr>
+<tr>
+  <td>$80</td> 
+  <td>Medium</td>
+</tr>
+
+      <tr>
+        <td colspan="3">All prices include wrapping</td>
+      </tr>
+      <tr>                <td colspan="4">All Small Bouquets - $50 </td>
+</tr>
+    </table>
+  <main>
+<form id="buildForm" onsubmit="return buildBouquet();">
+  <fieldset>
+    <legend>Build Your Own Bouquet</legend>
+
+    <label for="size">Select Size:</label>
+       <select id="size" required>
+      <option value="">--Choose Size--</option>
+        <option value="Small">Small</option>
+         <option value="Medium">Medium</option>
+                 <option value="Large">Large</option>
+    </select>
+
+    <label for="occasion">Select Occasion:</label>
+    <select id="occasion" required>
+      <option value="">--Choose Occasion--</option>
+         <option value="Graduation">Graduation</option>
+          <option value="Mother's Day">Mother's Day</option>
+                  <option value="Event Decor">Event Decor</option>
+                     <option value="Anniversary">Anniversary</option>
+                         <option value="Birthday">Birthday</option>
+                             <option value="Event Decor">Special Request</option>
+
+
+
+    </select>
+
+<label for="wrap">Select Wrapping:</label>
+    <select id="wrap">
+      <option value="Standard">Standard</option>
+          <option value="Luxe">Luxe</option>
+    </select>
+
+    <button type="submit">Build Your Bouquet</button>
+  </fieldset>
+</form>
+<form id="extrasForm" onsubmit="return false;">
+  <fieldset>
+    <legend>Choose Delivery Speed</legend>
+      <input type="radio" id="standard" name="delivery" value="Standard">
+         <label for="standard">Standard (3-5 days Free)</label><br>
+
+                <input type="radio" id="express" name="delivery" value="Express">
+    <label for="express">Express (1-2 days $25)</label><br>
+
+        <input type="radio" id="overnight" name="delivery" value="Overnight">
+            <label for="overnight">Overnight (next day $40)</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Extras</legend>
+         <input type="checkbox" id="card" name="extra" value="Card">
+            <label for="card">Include a Card $2</label><br>
+
+            <input type="checkbox" id="chocolate" name="extra" value="Chocolate">
+                 <label for="chocolate">Add Chocolate $5</label><br>
+
+    <input type="checkbox" id="balloons" name="extra" value="Balloons">
+        <label for="balloons">Add Balloons $15</label>
+  </fieldset>
+</form>
+
+ <h3>Your Cart</h3>
+    <ul id="cartList"></ul>
+    <button onclick="checkout()">Checkout</button>
+
+    <section>
+         <h2>Graduation Bouquets</h2>
+            <img id="gradDisplay" src="/public/images/bouquets2.png" alt="Graduation Bouquet" style="width:200px; height:200px; object-fit:cover; margin:10px;">
+      <select id="gradSelect" onchange="updateImage('gradSelect', 'gradDisplay')">
+        <option value="bouquets2.png">Bouquet 2</option>
+            <option value="bouquets3.jpeg">Bouquet 3</option>
+                <option value="bouquets4.jpeg">Bouquet 4</option>
+                    <option value="bouquets5.jpeg">Bouquet 5</option>
+                        <option value="bouquets6.jpeg">Bouquet 6</option>
+      </select>
+<button onclick="addDropdownBouquet('gradSelect')">Add to Cart</button>
+    </section>
+
+    <section>
+      <h2>Event Table Decor</h2>
+          <img id="tableDisplay" src="/public/images/bouquets11.jpeg" alt="Table Bouquets" style="width:200px; height:200px; object-fit:cover; margin:10px;">
+      <select id="tableSelect" onchange="updateImage('tableSelect', 'tableDisplay')">
+            <option value="bouquets11.jpeg">Table Bouquets</option>
+      </select>
+<button onclick="addDropdownBouquet('tableSelect')">Add to Cart</button>
+    </section>
+
+    <section>
+      <h2>Mother’s Day Bouquets</h2>
+        <img id="momDisplay" src="/public/images/bouquets7.jpeg" alt="Mother's Day Bouquet" style="width:200px; height:200px; object-fit:cover; margin:10px;">
+            <select id="momSelect" onchange="updateImage('momSelect', 'momDisplay')">
+         <option value="bouquets7.jpeg">Bouquet 7</option>
+             <option value="bouquets8.jpeg">Bouquet 8</option>
+                 <option value="bouquets9.jpeg">Bouquet 9</option>
+                     <option value="bouquets10.jpeg">Bouquet 10</option>
+      </select>
+<button onclick="addDropdownBouquet('momSelect')">Add to Cart</button>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Money Bouquets</p>
+     <p>
+    <a href="https://www.ftd.com" target="_blank">FTD Flowers</a> |
+    <a href="https://www.teleflora.com" target="_blank">Teleflora</a>
+  </p>
+  </footer>
+
+  <script src="/public/js/script.js"></script>
+</body>
+</html>
