@@ -1,0 +1,39 @@
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/money_bouquets', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected...'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
+// Define the Order schema
+const OrderSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    notes: { type: String },
+    cart: { type: [String], required: true }
+});
+
+// Create the Order model
+const Order = mongoose.model('Order', OrderSchema);
+
+// Sample order data
+const orders = [
+    { name: 'Tony Stark', email: 'TStark@marvel.com', phone: '1234567890', notes: 'Please deliver anytime after 5 PM', cart: ['Graduation Special - Medium'] },
+    { name: 'Steve Rogers', email: 'SRogers@marvel.com', phone: '0987654321', notes: 'Please include a card with the bouquet', cart: ['Holiday Bouquets - Large'] },
+    { name: 'Natasha Romanov', email: 'NRomanov@marvel.com', phone: '5551234567', notes: 'No special instructions', cart: ['Birthday Bouquet - Small'] },
+    { name: 'Bruce Banner', email: 'BBanner@marvel.com', phone: '5559876543', notes: 'Deliver on Saturday before 11AM', cart: ['Anniversary Bouquet - Medium'] },
+    { name: 'Clint Barton', email: 'CBarton@marvel.com', phone: '5556543210', notes: 'Leave at the front door', cart: ['Mother\'s Day Bouquet - Large'] }, 
+	{ name: 'Thor Odinson', email: 'TOdinson@marvel.com', phone: '5556543210', notes: 'Deliver bouquet to the front attendant', cart: ['Mother\'s Day Bouquet - Large'] }
+];
+
+// Insert sample data into MongoDB
+Order.insertMany(orders)
+    .then(() => {
+        console.log('Orders inserted successfully');
+        mongoose.connection.close();
+    })
+    .catch(err => {
+        console.error('Error inserting orders:', err);
+        mongoose.connection.close();
+    });
