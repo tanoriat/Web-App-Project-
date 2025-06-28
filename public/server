@@ -1,1 +1,96 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const mysql = require('mysql2');
+const mongoose = require('mongoose');
+const path = require('path');
+const app = express();
+const port = 3000;
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+// MySQL Connection
+const sqlConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1qaz2wsx!QAZ@WSX',
+    database: 'money_bouquets'
+});
+
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/money_bouquets', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Define a Mongoose schema and model for NoSQL
+const OrderSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    notes: String,
+    cart: [String]
+});
+const Order = mongoose.model('Order', OrderSchema);
+
+// Define a Mongoose schema and model for Bouquets
+const BouquetSchema = new mongoose.Schema({
+    name: String,
+    description: String
+});
+const Bouquet = mongoose.model('Bouquet', BouquetSchema);
+
+// Routes for navigable HTML pages
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/bouquets', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'bouquets.html'));
+});
+
+app.get('/order', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'order.html'));
+});
+
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
+// SQL Read Route (CRUD R)
+app.get('/api/sql/bouquets', (req, res) => {
+    sqlConnection.query('SELECT * FROM bouquets', (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred while fetching bouquets.' });
+        }
+        res.json(results);
+    });
+});
+
+// NoSQL Read Route (CRUD R)
+app.get('/api/nosql/orders', async (req, res) => {
+    try {
+        const orders = await Order.find({});
+        res.json(orders); // This sends the JSON response
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred while fetching orders.' });
+    }
+});
+
+// SQL Insert Route (CRUD U)
+app.post('/api/sql/orders', (req, res) => {
+    const { name, email, phone, notes, cart } = req.body;
+    sqlConnection.query('INSERT INTO orders (name, email, phone, notes) VALUES (?, ?, ?, ?)', [name, email, phone, notes], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred while creating the order.' });
+        }
+        res.status(201).json({ id: results.insertId, name, email, phone, notes, cart });
+    });
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
+});
