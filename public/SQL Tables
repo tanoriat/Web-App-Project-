@@ -1,0 +1,51 @@
+//navigated to test directory in cmd prompt > mkdir money_bouquets
+
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE money_bouquets;
+Query OK, 1 row affected (0.174 sec)
+
+mysql> USE money_bouquets;
+Database changed
+mysql> CREATE TABLE bouquets (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     name VARCHAR(255) NOT NULL,
+    ->     price DECIMAL(10, 2) NOT NULL,
+    ->     size VARCHAR(50) NOT NULL,
+    ->     description TEXT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.451 sec)
+
+mysql> CREATE TABLE orders (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     name VARCHAR(255) NOT NULL,
+    ->     email VARCHAR(255) NOT NULL,
+    ->     phone VARCHAR(20) NOT NULL,
+    ->     notes TEXT
+    -> );
+Query OK, 0 rows affected (0.465 sec)
+
+mysql> INSERT INTO bouquets (name, price, size, description) VALUES
+    -> ('Graduation Special', 85.00, 'Medium', 'A beautiful bouquet for graduation.'),
+    -> ('Graduation Special', 150.00, 'Large', 'A large bouquet for graduation.'),
+    -> ('Holiday Bouquets', 75.00, 'Medium', 'A festive bouquet for holidays.'),
+    -> ('Holiday Bouquets', 120.00, 'Large', 'A large festive bouquet for holidays.'),
+    -> ('Other Occasions', 50.00, 'Small', 'A small bouquet for various occasions.'),
+    -> ('Other Occasions', 80.00, 'Medium', 'A medium bouquet for various occasions.'),
+    -> ('Birthday Bouquet', 60.00, 'Small', 'A small bouquet for birthdays.'),
+    -> ('Anniversary Bouquet', 90.00, 'Medium', 'A medium bouquet for anniversaries.'),
+    -> ('Mother\'s Day Bouquet', 100.00, 'Large', 'A large bouquet for Mother\'s Day.'),
+    -> ('Thank You Bouquet', 70.00, 'Medium', 'A medium bouquet to say thank you.');
+Query OK, 10 rows affected (0.258 sec)
+Records: 10  Duplicates: 0  Warnings: 0
