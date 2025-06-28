@@ -3,126 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <title>Order Your Bouquet</title>
-     <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="\style.css">
 </head>
 <body>
   <header>
     <h1>Order Your Bouquet</h1>
   </header>
 
- <main>
-  <h3>Your Order Summary</h3>
-  <h4> Minimum $50 Deposit per Bouquet
-   ❤️ Your overall total is Invoiced via Email ❤️
-  </h4> 
-  <table id="summaryTable" border="1">
-    <tr>
-      <th>#</th>
-      <th>Bouquet</th>
-      <th>Price</th>
-    </tr>
-  </table>
+  <main>
+    <h3>Your Order Summary</h3>
+    <h4> Minimum $50 Deposit per Bouquet
+      ❤️ Your overall total is Invoiced via Email ❤️
+    </h4> 
+    <table id="summaryTable" border="1">
+      <tr>
+        <th>#</th>
+        <th>Bouquet</th>
+        <th>Price</th>
+      </tr>
+    </table>
 
-  <p>Subtotal: $<span id="subtotal">0.00</span></p>
-     <p>Tax (8%): $<span id="tax">0.00</span></p>
-  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+    <p>Subtotal: $<span id="subtotal">0.00</span></p>
+    <p>Tax (8%): $<span id="tax">0.00</span></p>
+    <p><strong>Total: $<span id="total">0.00</span></strong></p>
 
-  <form action="#" method="POST" onsubmit="return validateOrderForm();">
-         <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+    <form action="/api/sql/orders" method="POST" onsubmit="return submitOrder();">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
 
-     <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
 
-        <label for="phone">Phone (digits only):</label>
-            <input type="text" id="phone" name="phone" pattern="\d+" required>
+      <label for="phone">Phone (digits only):</label>
+      <input type="text" id="phone" name="phone" pattern="\d+" required>
 
-         <label for="notes">Notes:</label>
-     <textarea id="notes" name="notes" maxlength="256"></textarea>
+      <label for="notes">Notes:</label>
+      <textarea id="notes" name="notes" maxlength="256"></textarea>
 
-         <div id="formErrors" style="color:red;"></div>
+      <div id="formErrors" style="color:red;"></div>
 
-    <button type="submit">Submit Order</button>
-  </form>
-</main>
+      <button type="submit">Submit Order</button>
+    </form>
+  </main>
 
-<script>
-  const params = new URLSearchParams(window.location.search);
+  <script>
+    const params = new URLSearchParams(window.location.search);
     const cartParam = params.get('cart');
-        const priceMap = {
-    Small: 50,
-    Medium: 85,
-    Large: 150
-  };
+    const priceMap = {
+      Small: 50,
+      Medium: 85,
+      Large: 150
+    };
 
-  let subtotal = 0;
+    let subtotal = 0;
 
- if (cartParam) {
-  const cartItems = JSON.parse(decodeURIComponent(cartParam));
+    if (cartParam) {
+      const cartItems = JSON.parse(decodeURIComponent(cartParam));
       const table = document.getElementById('summaryTable');
 
-    cartItems.forEach((item, index) => {
-      const price = calculatePrice(item);
-         const row = document.createElement('tr');
-      row.innerHTML = `
-            <td>${index + 1}</td>
-        <td>${item}</td>
-           <td>$${price.toFixed(2)}</td>
-      `;
- table.appendChild(row);
-      subtotal += price;
-    });
+      cartItems.forEach((item, index) => {
+        const price = calculatePrice(item);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item}</td>
+          <td>$${price.toFixed(2)}</td>
+        `;
+        table.appendChild(row);
+        subtotal += price;
+      });
 
-    const tax = subtotal * 0.08;
-    const total = subtotal + tax;
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
 
-    document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-  document.getElementById('tax').textContent = tax.toFixed(2);
-    document.getElementById('total').textContent = total.toFixed(2);
-  }
-
-   function calculatePrice(desc) {
-  let price = 0;
-
-  if (desc.includes("Other Occasions")) {
-    if (desc.includes("Small")) price += 50;
-    else if (desc.includes("Medium")) price += 80;
-    else price += 50; // default for Other Occasions if size missing
-  } else {
-    if (desc.includes("Small")) price += 50;
-    if (desc.includes("Medium")) price += 85;
-    if (desc.includes("Large")) price += 150;
-  }
-
-  if (desc.includes("Overnight")) price += 40;
-  else if (desc.includes("Express")) price += 25;
-  // Standard delivery is free
-
-  if (desc.includes("Card")) price += 2;
-  if (desc.includes("Chocolate")) price += 5;
-  if (desc.includes("Balloons")) price += 15;
-
-  return price || 50; // default fallback if no match
-}
-
- function validateOrderForm() {
-    const phone = document.getElementById('phone').value;
-      if (!/^\d+$/.test(phone)) {
-      document.getElementById('formErrors').innerText = "Phone must be digits only.";
-     return false;
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('tax').textContent = tax.toFixed(2);
+      document.getElementById('total').textContent = total.toFixed(2);
     }
-    document.getElementById('formErrors').innerText = "";
-      alert("Order submitted! Thank you.");
-    return true;
-  }
-</script>
 
+    function calculatePrice(desc) {
+      let price = 0;
 
+      if (desc.includes("Other Occasions")) {
+        if (desc.includes("Small")) price += 50;
+        else if (desc.includes("Medium")) price += 80;
+        else price += 50; // default for Other Occasions if size missing
+      } else {
+        if (desc.includes("Small")) price += 50;
+        if (desc.includes("Medium")) price += 85;
+        if (desc.includes("Large")) price += 150;
+      }
+
+      if (desc.includes("Overnight")) price += 40;
+      else if (desc.includes("Express")) price += 25;
+      // Standard delivery is free
+
+      if (desc.includes("Card")) price += 2;
+      if (desc.includes("Chocolate")) price += 5;
+      if (desc.includes("Balloons")) price += 15;
+
+      return price || 50; // default fallback if no match
+    }
+
+    async function submitOrder() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const notes = document.getElementById('notes').value;
+      const cart = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('cart')));
+
+      const response = await fetch('/api/sql/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, phone, notes, cart })
+      });
+
+      if (response.ok) {
+        alert('Order submitted successfully!');
+        return true;
+      } else {
+        alert('Failed to submit order.');
+        return false;
+      }
+    }
+  </script>
 
   <footer>
     <p>&copy; 2025 Money Bouquets</p>
   </footer>
-
-  
 </body>
 </html>
